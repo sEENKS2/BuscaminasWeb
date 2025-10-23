@@ -1,11 +1,119 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tu título aquí</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscaminas Padel</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <!-- cuerpo vacío -->
+    <div class="contenedor">
+        <header class="encabezado">
+            <h1 class="titulo">🎾 Buscaminas Padel</h1>
+            <nav class="navegacion">
+                <a href="#juego" class="enlace-nav activo">Juego</a>
+                <a href="#contacto" class="enlace-nav">Contacto</a>
+                <a href="https://github.com/sEENKS2/BuscaminasWeb" target="_blank" class="enlace-nav">GitHub</a>
+            </nav>
+            <button class="boton-tema" id="botonTema">🌙</button>
+        </header>
+
+        <main class="principal">
+            <section id="pantallaInicio" class="pantalla-inicio">
+                <div class="contenedor-inicio">
+                    <h2>¡Bienvenido al primer buscaminas de Padel!</h2>
+                    <p>Encuentra todas las pelotas sin tocar las paletas rotas</p>
+                    <form id="formularioJugador" class="formulario-jugador">
+                        <input type="text" id="nombreJugador" placeholder="Ingresa tu nombre (mín. 3 letras)" required>
+                        <div class="selector-dificultad">
+                            <label>Nivel de dificultad:</label>
+                            <select id="selectorDificultad">
+                                <option value="facil">Fácil (8x8 - 10 paletas)</option>
+                                <option value="medio">Medio (12x12 - 25 paletas)</option>
+                                <option value="dificil">Difícil (16x16 - 40 paletas)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="boton-inicio">¡Comenzar Partido!</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="pantallaJuego" class="pantalla-juego oculto">
+                <div class="encabezado-juego">
+                    <div class="info-juego">
+                        <div class="item-info">
+                            <span class="etiqueta-info">Jugador:</span>
+                            <span id="jugadorActual">-</span>
+                        </div>
+                        <div class="item-info">
+                            <span class="etiqueta-info">⚠️ paletas:</span>
+                            <span id="contadorMinas">10</span>
+                        </div>
+                        <div class="item-info">
+                            <span class="etiqueta-info">⏱️ Tiempo:</span>
+                            <span id="temporizador">00:00</span>
+                        </div>
+                    </div>
+                    <div class="controles-juego">
+                        <button id="botonReiniciar" class="boton-control">🔄 Nuevo Partido</button>
+                        <button id="botonRanking" class="boton-control">🏆 Ranking</button>
+                    </div>
+                </div>
+                <div class="contenedor-tablero-juego">
+                    <div id="tableroJuego" class="tablero-juego"></div>
+                </div>
+            </section>
+
+            <section id="pantallaContacto" class="pantalla-contacto oculto">
+                <div class="contenedor-contacto">
+                    <h2>Contacto</h2>
+                    <form id="formularioContacto" class="formulario-contacto">
+                        <div class="grupo-formulario">
+                            <label for="nombreContacto">Nombre:</label>
+                            <input type="text" id="nombreContacto" required>
+                            <span class="mensaje-error" id="errorNombre"></span>
+                        </div>
+                        <div class="grupo-formulario">
+                            <label for="emailContacto">Email:</label>
+                            <input type="email" id="emailContacto" required>
+                            <span class="mensaje-error" id="errorEmail"></span>
+                        </div>
+                        <div class="grupo-formulario">
+                            <label for="mensajeContacto">Mensaje:</label>
+                            <textarea id="mensajeContacto" rows="5" required></textarea>
+                            <span class="mensaje-error" id="errorMensaje"></span>
+                        </div>
+                        <button type="submit" class="boton-enviar">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modalJuego" class="modal oculto">
+        <div class="modal-contenido">
+            <h3 id="modalTitulo"></h3>
+            <p id="modalMensaje"></p>
+            <div class="modal-acciones">
+                <button id="modalReiniciar" class="modal-boton primario">Nuevo Partido</button>
+                <button id="modalCerrar" class="modal-boton">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRanking" class="modal oculto">
+        <div class="modal-contenido contenido-ranking">
+            <h3>🏆 Ranking de Jugadores</h3>
+            <div class="controles-ranking">
+                <button id="ordenarPorPuntaje" class="boton-ordenar activo">Ordenar por Puntaje</button>
+                <button id="ordenarPorFecha" class="boton-ordenar">Ordenar por Fecha</button>
+            </div>
+            <div id="listaRanking" class="lista-ranking"></div>
+            <button id="cerrarRanking" class="modal-boton">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 </html>

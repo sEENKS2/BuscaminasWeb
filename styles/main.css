@@ -1,0 +1,507 @@
+:root {
+    --primary-color: #2E8B57;
+    --secondary-color: #FFD700;
+    --accent-color: #FF6B35;
+    --bg-color: #F0F8FF;
+    --text-color: #2C3E50;
+    --card-bg: #FFFFFF;
+    --border-color: #E0E6ED;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --gradient-bg: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+}
+
+[data-theme="dark"] {
+    --primary-color: #4CAF50;
+    --secondary-color: #FFC107;
+    --accent-color: #FF7043;
+    --bg-color: #1a1a1a;
+    --text-color: #E0E0E0;
+    --card-bg: #2D2D2D;
+    --border-color: #404040;
+    --gradient-bg: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--gradient-bg);
+    color: var(--text-color);
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.titulo {
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.navegacion {
+    display: flex;
+    gap: 20px;
+}
+
+.enlace-nav {
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.enlace-nav:hover,
+.enlace-nav.activo {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.boton-tema {
+    background: var(--secondary-color);
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.boton-tema:hover {
+    transform: scale(1.1);
+}
+
+.oculto {
+    display: none !important;
+}
+
+.pantalla-inicio,
+.pantalla-contacto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.contenedor-inicio,
+.contenedor-contacto {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.contenedor-inicio h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.formulario-jugador {
+    margin-top: 30px;
+}
+
+.formulario-jugador input,
+.formulario-jugador select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.selector-dificultad {
+    margin: 20px 0;
+}
+
+.selector-dificultad label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.boton-inicio {
+    background: var(--primary-color);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.boton-inicio:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+
+.encabezado-juego {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.info-juego {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.etiqueta-info {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.item-info span:last-child {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.controles-juego {
+    display: flex;
+    gap: 15px;
+}
+
+.boton-control {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-control:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+
+.contenedor-tablero-juego {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.tablero-juego {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--border-color);
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.fila-tablero {
+    display: flex;
+    gap: 2px;
+}
+
+.celda {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.celda:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.celda.revelada {
+    background: var(--bg-color);
+    color: var(--text-color);
+    cursor: default;
+}
+
+.celda.bandera {
+    background: var(--secondary-color);
+}
+
+.celda.mina {
+    background: var(--accent-color);
+}
+
+.celda.mina-explotada {
+    background: #dc3545;
+    animation: explosion 0.5s ease-out;
+}
+
+@keyframes explosion {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+
+.formulario-contacto {
+    margin-top: 20px;
+}
+
+.grupo-formulario {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.grupo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.grupo-formulario input,
+.grupo-formulario textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.mensaje-error {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.boton-enviar {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-enviar:hover {
+    background: var(--accent-color);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-contenido {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.contenido-ranking {
+    max-width: 600px;
+}
+
+.modal-contenido h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.modal-acciones {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.modal-boton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-boton.primario {
+    background: var(--primary-color);
+    color: white;
+}
+
+.modal-boton {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.modal-boton:hover {
+    transform: translateY(-2px);
+    background: var(--accent-color);
+    color: white;
+}
+
+.controles-ranking {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.boton-ordenar {
+    padding: 8px 16px;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-ordenar.activo,
+.boton-ordenar:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.lista-ranking {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.ranking-item {
+    background: var(--bg-color);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ranking-posicion {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.ranking-detalles {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 15px;
+}
+
+.ranking-puntaje {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .encabezado {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .navegacion {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .encabezado-juego {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .info-juego {
+        justify-content: space-around;
+    }
+
+    .celda {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .modal-contenido {
+        margin: 20px;
+    }
+
+    .modal-acciones {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .contenedor {
+        padding: 10px;
+    }
+
+    .celda {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .titulo {
+        font-size: 1.5rem;
+    }
+}
