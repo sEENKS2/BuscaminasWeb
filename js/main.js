@@ -132,6 +132,103 @@ function crearElementoCelda(fila, col) {
     return celda;
 }
 
+function colocarMinas(excluirFila, excluirCol) {
+    var tamanio = estadoJuego.tamanioTablero;
+    var cantidadMinas = estadoJuego.cantidadMinas;
+    var minasColocadas = 0;
+    var fila, col;
+    
+    while (minasColocadas < cantidadMinas) {
+        fila = Math.floor(Math.random() * tamanio);
+        col = Math.floor(Math.random() * tamanio);
+        
+        // No colocar mina en la primera celda clickeada o si ya hay una
+        if ((fila === excluirFila && col === excluirCol) || estadoJuego.tablero[fila][col].esMina) {
+            continue;
+        }
+        
+        estadoJuego.tablero[fila][col].esMina = true;
+        estadoJuego.posicionesMinas.push({ fila: fila, col: col });
+        minasColocadas++;
+    }
+    
+    calcularMinasVecinas();
+}
+
+function calcularMinasVecinas() {
+    var tamanio = estadoJuego.tamanioTablero;
+    var i, j, count, di, dj, ni, nj;
+    
+    for (i = 0; i < tamanio; i++) {
+        for (j = 0; j < tamanio; j++) {
+            if (!estadoJuego.tablero[i][j].esMina) {
+                count = 0;
+                
+                for (di = -1; di <= 1; di++) {
+                    for (dj = -1; dj <= 1; dj++) {
+                        ni = i + di;
+                        nj = j + dj;
+                        
+                        if (ni >= 0 && ni < tamanio && nj >= 0 && nj < tamanio && estadoJuego.tablero[ni][nj].esMina) {
+                            count++;
+                        }
+                    }
+                }
+                
+                estadoJuego.tablero[i][j].minasVecinas = count;
+            }
+        }
+    }
+}
+
+function manejarClickCelda(fila, col) {
+    if (!estadoJuego.estaJugando || estadoJuego.tablero[fila][col].revelada || estadoJuego.tablero[fila][col].bandera) {
+        return;
+    }
+    
+    // Primera jugada - colocar minas
+    if (!estadoJuego.juegoIniciado) {
+        estadoJuego.juegoIniciado = true;
+        colocarMinas(fila, col);
+        iniciarTemporizador();
+    }
+    
+    reproducirSonidoClic();
+    revelarCelda(fila, col);
+}
+
+function revelarCelda(fila, col) {
+    var celda = estadoJuego.tablero[fila][col];
+    
+    if (celda.revelada || celda.bandera) {
+        return;
+    }
+    
+    celda.revelada = true;
+    estadoJuego.celdasReveladas++;
+    
+    var celdaElemento = obtenerElementoCelda(fila, col);
+    celdaElemento.classList.add('revelada');
+    
+    if (celda.esMina) {
+        celdaElemento.textContent = '🏸';
+        celdaElemento.classList.add('mina-explotada');
+        terminarJuego(false); // Pierde automáticamente [cite: 28]
+        return;
+    }
+    
+    if (celda.minasVecinas > 0) {
+        celdaElemento.textContent = celda.minasVecinas; // Muestra número de minas vecinas [cite: 7, 8]
+        celdaElemento.style.color = obtenerColorNumero(celda.minasVecinas);
+    } else {
+        celdaElemento.textContent = '🎾'; // Celda vacía (personalizado)
+        // Revelar celdas adyacentes automáticamente
+        expandirCeldasVacias(fila, col);
+    }
+    
+    verificarVictoria();
+}
+
 function inicializarJuego() {
     cachearElementos();
     configurarEventListeners();
