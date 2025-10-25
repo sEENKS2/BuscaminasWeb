@@ -229,6 +229,49 @@ function revelarCelda(fila, col) {
     verificarVictoria();
 }
 
+function manejarClickDerechoCelda(evento, fila, col) {
+    evento.preventDefault(); // Prevenir menú contextual
+    if (!estadoJuego.estaJugando || estadoJuego.tablero[fila][col].revelada) {
+        return;
+    }
+    
+    alternarBandera(fila, col); // Colocar/quitar bandera [cite: 27]
+}
+
+function alternarBandera(fila, col) {
+    var celda = estadoJuego.tablero[fila][col];
+    var celdaElemento = obtenerElementoCelda(fila, col);
+    
+    if (celda.bandera) {
+        celda.bandera = false;
+        celdaElemento.classList.remove('bandera');
+        celdaElemento.textContent = '';
+        estadoJuego.contadorBanderas--;
+    } else {
+        celda.bandera = true;
+        celdaElemento.classList.add('bandera');
+        celdaElemento.textContent = '🚩';
+        estadoJuego.contadorBanderas++;
+    }
+    
+    actualizarUI();
+}
+
+function expandirCeldasVacias(fila, col) {
+    var tamanio = estadoJuego.tamanioTablero;
+    var di, dj, ni, nj;
+    
+    for (di = -1; di <= 1; di++) {
+        for (dj = -1; dj <= 1; dj++) {
+            ni = fila + di;
+            nj = col + dj;
+            
+            if (ni >= 0 && ni < tamanio && nj >= 0 && nj < tamanio && !estadoJuego.tablero[ni][nj].revelada) {
+                revelarCelda(ni, nj);
+            }
+        }
+    }
+
 function inicializarJuego() {
     cachearElementos();
     configurarEventListeners();
@@ -236,4 +279,4 @@ function inicializarJuego() {
     mostrarPantalla('pantallaInicio');
 }
 
-document.addEventListener('DOMContentLoaded', inicializarJuego);
+document.addEventListener('DOMContentLoaded', inicializarJuego);}
