@@ -30,7 +30,7 @@ var sonidos = {
     derrota: new Audio('sounds/derrota.mp3')
 };
 
-function padZero(num) {
+function agregarCero(num) {
     var numString = num.toString();
     return numString.length < 2 ? '0' + numString : numString;
 }
@@ -76,8 +76,13 @@ function mostrarPantalla(idPantalla) {
 }
 
 function manejarNavegacion(evento) {
-    evento.preventDefault();
     var href = evento.target.getAttribute('href');
+    
+    if (href.charAt(0) !== '#') {
+        return;
+    }
+
+    evento.preventDefault();
     
     if (href === '#juego') {
         mostrarPantalla('pantallaInicio');
@@ -161,7 +166,7 @@ function mostrarRankings(rankings, ordenarPor) {
         
         var fecha = new Date(juego.fecha);
         var fechaFormateada = fecha.toLocaleDateString() + ' ' + fecha.toLocaleTimeString();
-        var duracion = Math.floor(juego.duracion / 60) + ':' + padZero(juego.duracion % 60);
+        var duracion = Math.floor(juego.duracion / 60) + ':' + agregarCero(juego.duracion % 60);
 
         detalles.appendChild(nombreStrong);
         detalles.appendChild(document.createElement('br'));
@@ -243,7 +248,7 @@ function actualizarTemporizador() {
         estadoJuego.tiempoJuego = Math.floor((Date.now() - estadoJuego.tiempoInicio) / 1000);
         var minutos = Math.floor(estadoJuego.tiempoJuego / 60);
         var segundos = estadoJuego.tiempoJuego % 60;
-        elementos.temporizador.textContent = padZero(minutos) + ':' + padZero(segundos);
+        elementos.temporizador.textContent = agregarCero(minutos) + ':' + agregarCero(segundos);
     }
 }
 
