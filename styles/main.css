@@ -21,6 +21,7 @@
     --gradient-bg: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
 }
 
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--gradient-bg);
@@ -435,6 +436,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    border-left: 6px solid var(--primary-color); 
+    
+    overflow: hidden; 
 }
 
 .ranking-posicion {
@@ -452,6 +457,10 @@ body {
 .ranking-puntaje {
     font-weight: bold;
     color: var(--accent-color);
+}
+
+.ranking-item.partida-perdida {
+    border-left-color: #dc3545; 
 }
 
 /* Media Queries */

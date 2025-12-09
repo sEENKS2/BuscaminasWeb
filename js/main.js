@@ -132,27 +132,33 @@ function obtenerRankings() {
 }
 
 function mostrarRankings(rankings, ordenarPor) {
-    var partidasGanadas = rankings.filter(function(juego) { return juego.ganado; });
+    // CORRECCIÓN: Eliminamos el filtro .filter(...) para mostrar TAMBIÉN las derrotas.
+    // Usamos .slice() para crear una copia y no afectar el orden original almacenado.
+    var todasLasPartidas = rankings.slice();
     
     if (ordenarPor === 'puntaje') {
-        partidasGanadas.sort(function(a, b) { return b.puntaje - a.puntaje; });
+        todasLasPartidas.sort(function(a, b) { return b.puntaje - a.puntaje; });
     } else {
-        partidasGanadas.sort(function(a, b) { return new Date(b.fecha) - new Date(a.fecha); });
+        todasLasPartidas.sort(function(a, b) { return new Date(b.fecha) - new Date(a.fecha); });
     }
     
     var listaRanking = document.getElementById('listaRanking');
     listaRanking.innerHTML = '';
     
-    if (partidasGanadas.length === 0) {
+    if (todasLasPartidas.length === 0) {
         var mensajeVacio = document.createElement('p');
-        mensajeVacio.textContent = '¡Aún no hay partidas ganadas!';
+        mensajeVacio.textContent = '¡Aún no hay partidas registradas!';
         listaRanking.appendChild(mensajeVacio);
         return;
     }
     
-    partidasGanadas.slice(0, 10).forEach(function(juego, indice) {
+    todasLasPartidas.slice(0, 10).forEach(function(juego, indice) {
         var item = document.createElement('div');
         item.className = 'ranking-item';
+        
+        if (!juego.ganado) {
+            item.classList.add('partida-perdida'); 
+        }
         
         var posicion = document.createElement('div');
         posicion.className = 'ranking-posicion';
@@ -162,11 +168,15 @@ function mostrarRankings(rankings, ordenarPor) {
         detalles.className = 'ranking-detalles';
         
         var nombreStrong = document.createElement('strong');
-        nombreStrong.textContent = juego.nombreJugador;
+
+        var iconoEstado = juego.ganado ? '🏆' : '❌'; 
+        nombreStrong.textContent = iconoEstado + ' ' + juego.nombreJugador;
         
         var fecha = new Date(juego.fecha);
         var fechaFormateada = fecha.toLocaleDateString() + ' ' + fecha.toLocaleTimeString();
-        var duracion = Math.floor(juego.duracion / 60) + ':' + agregarCero(juego.duracion % 60);
+        
+        var funcionFormato = (typeof agregarCero === 'function') ? agregarCero : agregarCero;
+        var duracion = Math.floor(juego.duracion / 60) + ':' + funcionFormato(juego.duracion % 60);
 
         detalles.appendChild(nombreStrong);
         detalles.appendChild(document.createElement('br'));
@@ -207,13 +217,16 @@ function mostrarRanking() {
 }
 
 function calcularPuntaje(ganado) {
-    if (!ganado) return 0;
-    
-    var puntajeBase = 1000;
-    var bonusTiempo = Math.max(0, 300 - estadoJuego.tiempoJuego);
     var multiplicadorDificultad = { facil: 1, medio: 1.5, dificil: 2 }[estadoJuego.dificultad];
     
-    return Math.floor((puntajeBase + bonusTiempo) * multiplicadorDificultad);
+    if (ganado) {
+        var puntajeBase = 1000;
+        var bonusTiempo = Math.max(0, 300 - estadoJuego.tiempoJuego);
+        return Math.floor((puntajeBase + bonusTiempo) * multiplicadorDificultad);
+    } else {
+        var puntosPorCelda = 10;
+        return Math.floor((estadoJuego.celdasReveladas * puntosPorCelda) * multiplicadorDificultad);
+    }
 }
 
 function guardarResultadoJuego(ganado) {
