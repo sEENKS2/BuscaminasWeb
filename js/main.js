@@ -132,8 +132,6 @@ function obtenerRankings() {
 }
 
 function mostrarRankings(rankings, ordenarPor) {
-    // CORRECCIÓN: Eliminamos el filtro .filter(...) para mostrar TAMBIÉN las derrotas.
-    // Usamos .slice() para crear una copia y no afectar el orden original almacenado.
     var todasLasPartidas = rankings.slice();
     
     if (ordenarPor === 'puntaje') {
